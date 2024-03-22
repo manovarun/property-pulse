@@ -10,6 +10,9 @@ export const metadata = {
 const MainLayout = ({ children }) => {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/logo.png" />
+      </head>
       <body>
         <Navbar />
         <main>{children}</main>
