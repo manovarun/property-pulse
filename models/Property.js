@@ -1,4 +1,4 @@
-import { Schema, models, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const PropertySchema = new Schema(
   {
@@ -86,6 +86,6 @@ const PropertySchema = new Schema(
   }
 );
 
-const Property = models.property || model('Property', PropertySchema);
+const Property = models.Property || model('Property', PropertySchema);
 
 export default Property;
