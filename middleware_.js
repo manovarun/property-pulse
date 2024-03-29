@@ -1,10 +1,10 @@
-import { getSession } from 'next-auth/react';
 import { NextResponse } from 'next/server';
+import { getSessionUser } from './utils/getSessionUser';
 
 export async function middleware(request) {
-  const session = await getSession({ req: request });
+  const session = await getSessionUser();
 
-  console.log('Session:', session);
+  console.log('Sessionz:', session);
 
   // If the user is authenticated with Google, allow access to specified paths
   if (session?.user?.provider === 'google') {
