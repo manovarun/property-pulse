@@ -26,7 +26,9 @@ async function fetchProperty(id) {
       return [];
     }
 
-    const res = await fetch(`${apiDomain}/properties/${id}`);
+    const res = await fetch(`${apiDomain}/properties/${id}`, {
+      cache: 'no-store',
+    });
 
     const data = await res.json();
 
