@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import logo from '@/assets/images/logo-white.png';
 import profileDefault from '@/assets/images/profile.png';
 import { FaGoogle } from 'react-icons/fa';
@@ -10,7 +10,6 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const Navbar = () => {
   const { data: session } = useSession();
-
   const profileImage = session?.user?.image;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,6 +23,7 @@ const Navbar = () => {
       const res = await getProviders();
       setProviders(res);
     };
+
     setAuthProviders();
   }, []);
 
@@ -109,8 +109,8 @@ const Navbar = () => {
                 {providers &&
                   Object.values(providers).map((provider, index) => (
                     <button
-                      key={index}
                       onClick={() => signIn(provider.id)}
+                      key={index}
                       className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
                     >
                       <FaGoogle className="text-white mr-2" />
@@ -146,10 +146,6 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                  2
-                  {/* <!-- Replace with the actual number of notifications --> */}
-                </span>
               </Link>
               {/* <!-- Profile dropdown button --> */}
               <div className="relative ml-3">
@@ -167,15 +163,14 @@ const Navbar = () => {
                     <Image
                       className="h-8 w-8 rounded-full"
                       src={profileImage || profileDefault}
+                      alt=""
                       width={40}
                       height={40}
-                      alt=""
                     />
                   </button>
                 </div>
 
                 {/* <!-- Profile dropdown --> */}
-
                 {isProfileMenuOpen && (
                   <div
                     id="user-menu"
@@ -191,7 +186,9 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-0"
-                      onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                      }}
                     >
                       Your Profile
                     </Link>
@@ -201,13 +198,15 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
-                      onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                      }}
                     >
                       Saved Properties
                     </Link>
                     <button
                       onClick={() => {
-                        setIsProfileMenuOpen((prev) => !prev);
+                        setIsProfileMenuOpen(false);
                         signOut();
                       }}
                       className="block px-4 py-2 text-sm text-gray-700"
@@ -255,15 +254,15 @@ const Navbar = () => {
                 Add Property
               </Link>
             )}
+
             {!session &&
               providers &&
               Object.values(providers).map((provider, index) => (
                 <button
-                  key={index}
                   onClick={() => signIn(provider.id)}
-                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
+                  key={index}
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
                 >
-                  <FaGoogle className="text-white mr-2" />
                   <span>Login or Register</span>
                 </button>
               ))}
@@ -273,5 +272,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;

@@ -83,7 +83,6 @@ export const PUT = async (request, { params }) => {
     const formData = await request.formData();
 
     const amenities = formData.getAll('amenities');
-
     const existingProperty = await Property.findById(id);
 
     if (!existingProperty) {
